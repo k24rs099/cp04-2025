@@ -160,7 +160,7 @@
     var rest = 0;
     var etime = 0;
     var stopTime = 0;
-
+    var gameMode = false;
 
     
     // ボタンの初期設定
@@ -195,6 +195,7 @@
         $("#btnA").prop("disabled",true);
         $("#btnB").prop("disabled", false);
         $("#btnC").prop("disabled", true);
+        $("#btnD").prop("disabled", true);
     }
 
     // ButtonBがクリックされた時の処理
@@ -214,12 +215,17 @@
     }
 
     function btnDClick(e){
-
+        if(gameMode){
+            gameMode = false;
+        } else {
+            gameMode = true;
+        }
     }   
     
  
     // 繰り返し実行する処理
     function timer(){  
+        console.log(gameMode)
         if(active) {
             etime = parseInt( (new Date() - startTime)/1000 ) + stopTime;
             rest = period - etime;
@@ -234,6 +240,7 @@
                 $("#btnA").prop("disabled",false);
                 $("#btnB").prop("disabled", true);
                 $("#btnC").prop("disabled",false);
+                $("#btnD").prop("disabled", false);
             }
         }
         
