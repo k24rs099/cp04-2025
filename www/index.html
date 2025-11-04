@@ -204,6 +204,18 @@
         stopTime = etime;    
         $("#btnA").prop("disabled", false);
         $("#btnB").prop("disabled", true);
+
+        if(gameMode){
+            if(rest == 10){
+                $("#remain").html("成功!");
+            } else if(rest == 11 || rest == 9) {
+                $("#remain").html("おしい!");
+            } else {
+                $("#remain").html("失敗!");
+            }
+            $("#time").html("残り時間： " + rest)
+            $("#btnA").prop("disabled", true);
+        }
     }
 
     // ButtonCがクリックされた時の処理
@@ -225,12 +237,17 @@
  
     // 繰り返し実行する処理
     function timer(){  
-        console.log(gameMode)
+        console.log(gameMode);
         if(active) {
             etime = parseInt( (new Date() - startTime)/1000 ) + stopTime;
             rest = period - etime;
-            $("#time").html("経過時間： " + etime);
-            $("#remain").html("残り時間： " + rest);
+            if(gameMode){
+                $("#remain").html("経過時間： ???");
+                $("#time").html("残り時間： ???")
+            } else {
+                $("#time").html("経過時間： " + etime);
+                $("#remain").html("残り時間： " + rest);
+            }
             analog(rest);
 
             if(rest <= 0) {
@@ -241,11 +258,15 @@
                 $("#btnB").prop("disabled", true);
                 $("#btnC").prop("disabled",false);
                 $("#btnD").prop("disabled", false);
+
+                if(gameMode){
+                    $("#remain").html("失敗!");
+                    $("#time").html("残り時間： " + rest)
+                }
             }
         }
-        
-        
     } 
+
 
   </script>
 </head>
@@ -260,7 +281,7 @@
     <button id="btnA">Start</button>  
     <button id="btnB">Stop</button>  
     <button id="btnC">Set</button>  
-    <button id="btnD">Test</button>
+    <button id="btnD">Game</button>
     <input type="number" id="minute" value=0 >
     <input type="number" id="second" value=15 >
 </body>
